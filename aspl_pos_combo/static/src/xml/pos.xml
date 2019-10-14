@@ -4,7 +4,7 @@
         <div class="box-pos-product-ticket" id="box-pos-product-ticket">
             <t t-set="i" t-value="0"/>
             <div t-foreach="orderlines" t-as="orderline" class="receipt-orderlines">
-                <div t-foreach="_.range(orderline.get_quantity_str_with_unit())" t-as="line">
+                <div t-foreach="_.range(orderline.get_quantity())" t-as="line">
                     <div class='pos-product-ticket'>
                         <div name="order_info">
                             <div style="float:left;">
