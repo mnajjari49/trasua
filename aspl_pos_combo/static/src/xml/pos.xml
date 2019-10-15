@@ -4,44 +4,46 @@
         <div class="box-pos-product-ticket" id="box-pos-product-ticket">
             <t t-set="i" t-value="0"/>
             <div t-foreach="orderlines" t-as="orderline" class="receipt-orderlines">
-                <div t-foreach="_.range(orderline.get_quantity())" t-as="line">
-                    <div class='pos-product-ticket'>
-                        <div name="order_info">
-                            <div style="float:left;">
-                                Date: <t t-esc="moment().format('L LT')"/> <br />
-                                Receipt: <b><t t-esc="order.name"/></b><br />
-                            </div>
-                            <div style="float: right;font-size: 16px;font-weight: bold;">
-                                <t t-set="i" t-value="i + 1"/>
-                                <t t-esc="i"/>/<t t-esc="order.get_total_item()"/>
-                            </div>
-                            <t t-if="receipt.header">
-                                <div style='float:left;'>
-                                    <b><t t-esc="widget.pos.company.name"/></b>
+                <t t-if="orderline.get_unit_display_price() > 0">
+                    <div t-foreach="_.range(orderline.get_quantity())" t-as="line">
+                        <div class='pos-product-ticket'>
+                            <div name="order_info">
+                                <div style="float:left;">
+                                    Date: <t t-esc="moment().format('L LT')"/> <br />
+                                    Receipt: <b><t t-esc="order.name"/></b><br />
                                 </div>
-                            </t>
-                        </div>
-                        <div style="clear: both;height:5px;"></div>
-                        <div style="width:66%;display:inline-block;vertical-align:top;font-weight: bolder;font-size: 9px;">
-                            <t t-esc="orderline.get_product().display_name"/>
-                            <t t-if="orderline.get_discount() > 0">
-                                <div class="pos-disc-font">
-                                    With a <t t-esc="orderline.get_discount()"/>% discount
+                                <div style="float: right;font-size: 16px;font-weight: bold;">
+                                    <t t-set="i" t-value="i + 1"/>
+                                    <t t-esc="i"/>/<t t-esc="order.get_exac_total_item()"/>
                                 </div>
-                            </t>
-                            <t t-if="orderline.get_combo_prod_info()">
-                                <t t-foreach="orderline.get_combo_prod_info()" t-as="prod_info">
-                                    <div class="pos-disc-font" style="font-size:8px;font-weight: normal;">
-                                        + <t t-esc="prod_info.product.display_name"/> x <t t-esc="prod_info.qty"/>
+                                <t t-if="receipt.header">
+                                    <div style='float:left;'>
+                                        <b><t t-esc="widget.pos.company.name"/></b>
                                     </div>
                                 </t>
-                            </t>
-                        </div>
-                        <div class="pos-right-align" style="width:30%;display:inline-block;vertical-align:top;font-weight: bolder;font-size: 11px;">
-                            <t t-esc="widget.format_currency(orderline.get_unit_display_price())"/>
+                            </div>
+                            <div style="clear: both;height:5px;"></div>
+                            <div style="width:66%;display:inline-block;vertical-align:top;font-weight: bolder;font-size: 9px;">
+                                <t t-esc="orderline.get_product().display_name"/>
+                                <t t-if="orderline.get_discount() > 0">
+                                    <div class="pos-disc-font">
+                                        With a <t t-esc="orderline.get_discount()"/>% discount
+                                    </div>
+                                </t>
+                                <t t-if="orderline.get_combo_prod_info()">
+                                    <t t-foreach="orderline.get_combo_prod_info()" t-as="prod_info">
+                                        <div class="pos-disc-font" style="font-size:8px;font-weight: normal;">
+                                            + <t t-esc="prod_info.product.display_name"/> x <t t-esc="prod_info.qty"/>
+                                        </div>
+                                    </t>
+                                </t>
+                            </div>
+                            <div class="pos-right-align" style="width:30%;display:inline-block;vertical-align:top;font-weight: bolder;font-size: 11px;">
+                                <t t-esc="widget.format_currency(orderline.get_unit_display_price())"/>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </t>
             <br />
             </div>
         </div>

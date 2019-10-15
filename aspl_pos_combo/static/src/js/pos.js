@@ -25,10 +25,20 @@ odoo.define('aspl_pos_combo.pos', function (require) {
         get_total_item : function(){
             var totalItem = 0;
             this.orderlines.each(function(line){
-                totalItem += line.get_quantity();
+                if(line.get_display_price() > 0)
+                    totalItem += line.get_quantity();
             });
 
             return totalItem;
+        },
+        get_exac_total_item : function(){
+            var totalItemExac = 0;
+            this.orderlines.each(function(line){
+                if(line.get_display_price() > 0)
+                    totalItemExac += line.get_quantity();
+            });
+
+            return totalItemExac;
         },
 		add_product: function(product, options){
         	var self = this;
@@ -592,12 +602,6 @@ odoo.define('aspl_pos_combo.pos', function (require) {
             this.$('.pos-receipt-container').html(QWeb.render('PosTicket', this.get_receipt_render_env()));
             this.$('.pos-product-container').html(QWeb.render('PosProduct', this.get_receipt_render_env()));
         }
-    });
-
-    screens.BillScreenWidget.include({
-         print_web: function() {
-             alert('print_web BillScreenWidget');
-         }
     });
 
 });
