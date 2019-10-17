@@ -62,6 +62,7 @@ odoo.define("vouchers_pos.coupons", function (require) {
 
     function get_coupon_product(products) {
         for (var i in products){
+            // if(products[i]['display_name'] == 'Phiếu quà tặng mua hàng')
             if(products[i]['display_name'] == 'Gift-Coupon')
                 return products[i]['id'];
         }
@@ -217,8 +218,6 @@ odoo.define("vouchers_pos.coupons", function (require) {
                 // verifying and applying coupon
                 if(self.flag){
                     var order = self.pos.get_order();
-                    // order.coupon = false
-                    // console.log(order);
                     var lines = order ? order.orderlines : false;
                     if(order.coupon){
                         self.gui.close_popup();
@@ -245,6 +244,7 @@ odoo.define("vouchers_pos.coupons", function (require) {
                                 });
                             }
                             else{
+                                console.log(self.coupon_product);
                                 order.add_product(product, {quantity: 1, price: price});
                                 order.coupon_applied();
                                 // updating coupon balance after applying coupon
@@ -328,7 +328,7 @@ odoo.define("vouchers_pos.coupons", function (require) {
         check_voucher_validy: function () {
             var self = this;
             var order = self.pos.get_order();
-            console.log(order);
+            // console.log(order);
             var vouchers = self.pos.vouchers;
             var voucher = null;
             for (var i in vouchers){

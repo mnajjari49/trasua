@@ -180,7 +180,7 @@ msgstr ""
 #: model:product.product,name:vouchers_pos.gift_product_pos
 #: model:product.template,name:vouchers_pos.gift_product_pos_product_template
 msgid "Gift-Coupon"
-msgstr "Phiếu quà tặng mua hàng"
+msgstr ""
 
 #. module: vouchers_pos
 #: model:ir.model.fields,field_description:vouchers_pos.field_gift_coupon_pos__id
