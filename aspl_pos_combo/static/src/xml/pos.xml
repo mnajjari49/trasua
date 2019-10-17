@@ -26,7 +26,7 @@
                             <div style="width:66%;display:inline-block;vertical-align:top;font-weight: bolder;font-size: 9px;">
                                 <t t-esc="orderline.get_product().display_name"/>
                                 <t t-if="orderline.get_discount() > 0">
-                                    <div class="pos-disc-font" style="font-size:9px">
+                                    <div class="pos-disc-font" style="font-size:8px">
                                         Với chiết khấu <t t-esc="orderline.get_discount()"/>%
                                     </div>
                                 </t>
