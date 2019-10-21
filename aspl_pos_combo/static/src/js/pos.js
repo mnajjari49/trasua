@@ -11,7 +11,7 @@ odoo.define('aspl_pos_combo.pos', function (require) {
     var _t = core._t;
 
 	models.load_fields("product.product", ['is_combo','product_combo_ids']);
-	models.load_fields("res.company", ['street','street2','city']);
+	models.load_fields("res.company", ['street','street2','city','logo']);
 
 	models.PosModel.prototype.models.push({
         model: 'product.combo',

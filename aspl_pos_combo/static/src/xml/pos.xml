@@ -98,7 +98,8 @@
 <!--                    <strong>Hotline:</strong> <t t-esc="widget.pos.company.phone || ''"/><br />-->
                 </div>
                 <div class="company_logo">
-                    <img t-attf-src="/web/binary/company_logo?company={{ widget.pos.company.id }}" style="width:100%"/>
+<!--                    <img t-attf-src="/web/binary/company_logo?company={{ widget.pos.company.id }}" style="width:100%"/>-->
+                    <img t-att-src="'data:image/png;base64,' + (widget.pos.company.logo)" class="img-thumbnail" alt="" style="width: 100%;"/>
                 </div>
             </div>
 
@@ -237,11 +238,12 @@
 
     </t>
 
-<!--    <t t-extend="Chrome">-->
-<!--        <t t-jquery='.pos-logo' t-operation='replace'>-->
-<!--            <img class="pos-logo" src="/web/binary/company_logo?company=1" />-->
-<!--        </t>-->
-<!--    </t>-->
+    <t t-extend="Chrome">
+        <t t-jquery='.pos-logo' t-operation='replace'>
+            <img class="pos-logo" src="/web/binary/company_logo?company=1" />
+<!--            <img class="pos-logo" src="/aspl_pos_combo/static/src/img/logo.png" alt="Logo"/>-->
+        </t>
+    </t>
 
     <t t-extend="Product">
         <t t-jquery="span.price-tag" t-operation="after">
