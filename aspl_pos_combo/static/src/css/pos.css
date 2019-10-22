@@ -186,6 +186,12 @@
 
 .pos .box-pos-product-ticket{text-align: center;}
 
+/*.pos .pos-sale-ticket .receipt-orderlines .pos-disc-font{font-size: 9px;}*/
+.pos .text-right{text-align:right;}
+.pos .text-center{text-align:center;}
+.pos .text-bold{font-weight: bold;}
+.pos .border-dash-y{border-bottom:1px dashed;border-top:1px dashed;font-weight: bolder;}
+
 .polines {
     float: left;
     font-size: 16px;
