@@ -598,7 +598,7 @@ odoo.define('pos_promotion.promotion', function (require) {
                                         discount = (total * promotion.total_discount)/100;
                                         // console.log(discount);
                                         order.set_discount_product_id(promotion.discount_product[0]);
-//                                        order.set_discount_history(true);
+                                       // order.set_discount_history(true);
                                     }
                                 }
                             }else if(promotion.operator == 'is_eql_to'){
@@ -606,7 +606,7 @@ odoo.define('pos_promotion.promotion', function (require) {
                                     if(promotion.discount_product && promotion.discount_product[0]){
                                         discount = (total * promotion.total_discount)/100;
                                         order.set_discount_product_id(promotion.discount_product[0]);
-//                                        order.set_discount_history(true);
+                                       // order.set_discount_history(true);
                                     }
                                 }
                             }

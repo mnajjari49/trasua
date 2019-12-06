@@ -344,7 +344,7 @@ msgstr "Một lần nhấp để chỉnh sửa Combo"
 #: code:addons/aspl_pos_combo/static/src/xml/pos.xml:182
 #, python-format
 msgid "Subtotal:"
-msgstr "Tổng phụ:"
+msgstr "Thành tiền:"
 
 #. module: aspl_pos_combo
 #. openerp-web
@@ -390,5 +390,5 @@ msgstr "Sử dụng tính năng combo trong nhà hàng"
 #: code:addons/aspl_pos_combo/static/src/xml/pos.xml:136
 #, python-format
 msgid "With a"
-msgstr "Với một"
+msgstr "Với"
 

@@ -377,31 +377,80 @@ odoo.define('aspl_pos_combo.pos', function (require) {
 
             total_amount = self.product.get_price(pricelist, 1);
 
-            // console.log("total_amount:" + total_amount);
+            var promotion_list = self.pos.pos_promotions;
+            var pos_discount_multi_prods = self.pos.pos_discount_multi_prods;
+			var pos_discount_multi_categ = self.pos.pos_discount_multi_categ;
+
             self.new_combo_products_details.map(function(combo_line){
             	if(combo_line.product_details.length > 0){
             		combo_line.product_details.map(function(prod_detail){
             			if(prod_detail.used_time){
             				var product = self.pos.db.get_product_by_id(prod_detail.product_id);
+                            var disc_line_record = false;
+
+            				//CHECK PROMOTION PRODUCT ON COMBO
+                            if(promotion_list && promotion_list[0]){
+                                _.each(promotion_list, function(promotion) {
+                                    // if (promotion && promotion.promotion_type == "discount_on_multi_product") {
+                                    //     if (promotion.multi_products_discount_ids && promotion.multi_products_discount_ids[0]) {
+                                    //         _.each(promotion.multi_products_discount_ids, function (disc_line_id) {
+                                    //             var disc_line_record = _.find(pos_discount_multi_prods, function (obj) {
+                                    //                 return obj.id == disc_line_id
+                                    //             });
+                                    //             if (disc_line_record) {
+                                    //                 self.check_products_for_disc(disc_line_record, promotion);
+                                    //             }
+                                    //         })
+                                    //     }
+                                    // } else
+                                    // console.log(promotion);
+                                    if (promotion && promotion.promotion_type == "discount_on_multi_categ") {
+                                        if (promotion.multi_categ_discount_ids && promotion.multi_categ_discount_ids[0]) {
+                                            _.each(promotion.multi_categ_discount_ids, function (disc_line_id) {
+                                                disc_line_record = _.find(pos_discount_multi_categ, function (obj) {
+                                                    return obj.id == disc_line_id
+                                                });
+                                                // if (disc_line_record) {
+                                                //     console.log('discount category');
+                                                //     console.log(disc_line_record);
+                                                //     // self.check_categ_for_disc(disc_line_record, promotion);
+                                                // }
+                                            })
+                                        }
+                                    }
+                                });
+                            }
+
                 			if(product){
+                			    var cb_discount = 0;
+                			    var cb_unit_price = product.get_price(pricelist, 1);
+
+                			    if(disc_line_record){
+                			        if(disc_line_record.categ_ids.indexOf(product.pos_categ_id[0]) >= 0){
+                			            cb_discount = disc_line_record.categ_discount;
+                			            cb_unit_price = product.get_price(pricelist, 1) * (disc_line_record.categ_discount/100);
+                                    }
+                                }
+
                 				products_info.push({
                 					"product":product, 
                 					'qty':prod_detail.used_time,
-                					'unit_price':product.get_price(pricelist, 1) ,
-                					'price':product.get_price(pricelist, 1) * prod_detail.used_time,
+                					'unit_price':cb_unit_price ,
+                					'price': cb_unit_price * prod_detail.used_time,
                 					'id':combo_line.id,
+                					'discount':cb_discount,
                 				});
-                				total_amount += product.get_price(pricelist, 1) * prod_detail.used_time;
-                				console.log("qty:" + prod_detail.used_time);
-                				console.log("line:" + total_amount);
+                				total_amount += cb_unit_price * prod_detail.used_time;
+                				// console.log("qty:" + prod_detail.used_time);
+                				// console.log("line:" + total_amount);
 
                 			}
             			}
             		});
             	}
             });
-            console.log(total_amount);
-            console.log(products_info);
+            // console.log(total_amount);
+            // console.log(products_info);
             var selected_line = order.get_selected_orderline();
             if(products_info.length > 0){
             	if(selected_line){
