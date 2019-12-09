@@ -290,6 +290,14 @@
                     <t t-esc="widget.format_currency(order.get_change(),0)"/>
                     </td></tr>
             </table>
+            <t t-jquery="table.receipt-change" t-operation="after">
+                <t t-if="order.get_discount_price() and order.get_discount_price() > 0">
+                    <br />
+                    <div style='text-align:left'>
+                        <span>Total Discount:<t t-esc="widget.format_currency(order.get_discount_price(),0)"/></span>
+                    </div>
+                </t>
+            </t>
             <t t-if="receipt.footer">
                 <br />
                 <div style='text-align:center'>

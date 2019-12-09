@@ -36,7 +36,7 @@ class Pos_promotion(models.Model):
     #                                    ('discount_on_above_price', 'Discount On Above Price')],
     #                                   default="buy_x_get_y", require=True)
     promotion_type = fields.Selection([('buy_x_get_dis_y','Buy X Get Discount On Y'),
-                                       ('dicount_total','Discount (%) on Total Amount'),
+                                       ('dicount_total','Discount on Total Amount'),
                                        ('quantity_discount','Percent Discount on Quantity'),
                                        ('quantity_price','Fix Discount on Quantity'),
                                        ('discount_on_multi_product','Discount On Combination Products'),
@@ -62,7 +62,9 @@ class Pos_promotion(models.Model):
     total_amount = fields.Float('Total Invoice Amount')
     operator = fields.Selection([('is_eql_to','Is Equal To'),
                                  ('greater_than_or_eql','Greater Than Or Equal')])
-    total_discount = fields.Float('Total Discount(%)')
+    discount_type = fields.Selection([('Percent', 'Percent'),('Amount', 'Amount')] , string="Discount type", default="Percent")
+    total_discount = fields.Float('Total Discount')
+
     discount_product = fields.Many2one("product.product","Discount Product")
     active = fields.Boolean(default=True)
     parent_product_ids = fields.Many2many(comodel_name='product.product', string="Products")

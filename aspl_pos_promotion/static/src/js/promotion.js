@@ -595,7 +595,12 @@ odoo.define('pos_promotion.promotion', function (require) {
                             if(promotion.operator == 'greater_than_or_eql'){
                                 if(promotion.total_amount && total >= promotion.total_amount){
                                     if(promotion.discount_product && promotion.discount_product[0]){
-                                        discount = (total * promotion.total_discount)/100;
+                                    	if(promotion.discount_type == 'Percent'){
+                                    		discount = (total * promotion.total_discount)/100;
+										}else{
+                                    		discount = promotion.total_discount;
+										}
+
                                         // console.log(discount);
                                         order.set_discount_product_id(promotion.discount_product[0]);
                                        // order.set_discount_history(true);
@@ -604,7 +609,11 @@ odoo.define('pos_promotion.promotion', function (require) {
                             }else if(promotion.operator == 'is_eql_to'){
                                 if(promotion.total_amount && total == promotion.total_amount){
                                     if(promotion.discount_product && promotion.discount_product[0]){
-                                        discount = (total * promotion.total_discount)/100;
+                                        if(promotion.discount_type == 'Percent'){
+                                    		discount = (total * promotion.total_discount)/100;
+										}else{
+                                    		discount = promotion.total_discount;
+										}
                                         order.set_discount_product_id(promotion.discount_product[0]);
                                        // order.set_discount_history(true);
                                     }

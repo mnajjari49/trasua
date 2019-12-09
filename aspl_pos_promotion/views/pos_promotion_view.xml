@@ -50,6 +50,7 @@
 								<group>
 									<field name="total_amount" style="width:20%"/>
 									<field name="operator"/>
+									<field name="discount_type" style="width:20%"/>
 									<field name="total_discount" style="width:20%"/>
 									<field name="discount_product" domain="[('available_in_pos','=', True)]"/>
 								</group>
