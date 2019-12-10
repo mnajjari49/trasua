@@ -387,24 +387,23 @@ odoo.define('aspl_pos_combo.pos', function (require) {
             			if(prod_detail.used_time){
             				var product = self.pos.db.get_product_by_id(prod_detail.product_id);
                             var disc_line_record = false;
+                            var disc_product_line_record = false;
 
             				//CHECK PROMOTION PRODUCT ON COMBO
                             if(promotion_list && promotion_list[0]){
                                 _.each(promotion_list, function(promotion) {
-                                    // if (promotion && promotion.promotion_type == "discount_on_multi_product") {
-                                    //     if (promotion.multi_products_discount_ids && promotion.multi_products_discount_ids[0]) {
-                                    //         _.each(promotion.multi_products_discount_ids, function (disc_line_id) {
-                                    //             var disc_line_record = _.find(pos_discount_multi_prods, function (obj) {
-                                    //                 return obj.id == disc_line_id
-                                    //             });
-                                    //             if (disc_line_record) {
-                                    //                 self.check_products_for_disc(disc_line_record, promotion);
-                                    //             }
-                                    //         })
-                                    //     }
-                                    // } else
-                                    // console.log(promotion);
-                                    if (promotion && promotion.promotion_type == "discount_on_multi_categ") {
+                                    if (promotion && promotion.promotion_type == "discount_on_multi_product") {
+                                        if (promotion.multi_products_discount_ids && promotion.multi_products_discount_ids[0]) {
+                                            _.each(promotion.multi_products_discount_ids, function (disc_line_id) {
+                                                disc_product_line_record = _.find(pos_discount_multi_prods, function (obj) {
+                                                    return obj.id == disc_line_id
+                                                });
+                                                // if (disc_line_record) {
+                                                //     self.check_products_for_disc(disc_line_record, promotion);
+                                                // }
+                                            })
+                                        }
+                                    } else if (promotion && promotion.promotion_type == "discount_on_multi_categ") {
                                         if (promotion.multi_categ_discount_ids && promotion.multi_categ_discount_ids[0]) {
                                             _.each(promotion.multi_categ_discount_ids, function (disc_line_id) {
                                                 disc_line_record = _.find(pos_discount_multi_categ, function (obj) {
@@ -425,10 +424,23 @@ odoo.define('aspl_pos_combo.pos', function (require) {
                 			    var cb_discount = 0;
                 			    var cb_unit_price = product.get_price(pricelist, 1);
 
+                			    // console.log(disc_line_record);
+
                 			    if(disc_line_record){
                 			        if(disc_line_record.categ_ids.indexOf(product.pos_categ_id[0]) >= 0){
                 			            cb_discount = disc_line_record.categ_discount;
-                			            cb_unit_price = product.get_price(pricelist, 1) * (disc_line_record.categ_discount/100);
+                			            cb_unit_price = product.get_price(pricelist, 1) * ((100 - disc_line_record.categ_discount)/100);
+                                    }
+                                }
+
+                			    // console.log(disc_product_line_record);
+
+                			    if(disc_product_line_record){
+                			        if(disc_product_line_record.product_ids.indexOf(product.id) >= 0){
+                			            cb_discount = disc_product_line_record.products_discount;
+                			            cb_unit_price = product.get_price(pricelist, 1) * ((100 - disc_product_line_record.products_discount)/100);
+                			            console.log(disc_product_line_record.products_discount)
+                			            console.log(cb_unit_price)
                                     }
                                 }
 

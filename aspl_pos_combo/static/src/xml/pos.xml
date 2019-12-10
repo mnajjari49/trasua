@@ -34,10 +34,10 @@
                                     <t t-foreach="orderline.get_combo_prod_info()" t-as="prod_info">
                                         <div class="pos-disc-font" style="font-size:8px;font-weight: normal;">
                                             + <t t-esc="prod_info.product.display_name"/> x <t t-esc="prod_info.qty"/>
-                                            <t t-if="prod_info.discount">
-                                                <br/>
-                                                <i style="font-size: 8px;font-weight: bold;">=> Với chiết khấu <t t-esc="prod_info.discount"/>%</i>
-                                            </t>
+<!--                                            <t t-if="prod_info.discount">-->
+<!--                                                <br/>-->
+<!--                                                <i style="font-size: 8px;font-weight: bold;">=> Với chiết khấu <t t-esc="prod_info.discount"/>%</i>-->
+<!--                                            </t>-->
                                         </div>
                                     </t>
                                 </t>
@@ -294,7 +294,7 @@
                 <t t-if="order.get_discount_price() and order.get_discount_price() > 0">
                     <br />
                     <div style='text-align:left'>
-                        <span>Total Discount:<t t-esc="widget.format_currency(order.get_discount_price(),0)"/></span>
+                        <span>Giảm trên tổng HĐ: <b><t t-esc="widget.format_currency(order.get_discount_price(),0)"/></b></span>
                     </div>
                 </t>
             </t>

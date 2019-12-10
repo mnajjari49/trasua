@@ -103,7 +103,7 @@ odoo.define('odt_pos_ticket_receipt.order', function (require) {
 		},
 		get_order_discount: function() {
 			return round_pr(this.orderlines.reduce((function(sum, orderLine) {
-				if (orderLine.get_product().display_name == 'Discount Product')
+				if (orderLine.get_product().display_name == 'Giảm giá')
 					return sum + Math.abs(orderLine.get_price_without_tax());
 				else
 				    return sum;

@@ -178,7 +178,7 @@
         </record>
 
 		<record id="disc_product" model="product.product">
-            <field name="name">Discount Product</field>
+            <field name="name">Giảm giá</field>
             <field name="sale_ok" eval="True"/>
             <field name="available_in_pos" eval="True"/>
             <field name="list_price">0</field>
